@@ -3,6 +3,7 @@ using System;
 using UIKit;
 using CoreGraphics;
 using System.Collections.Generic;
+using Acr.UserDialogs;
 
 namespace SecretFiles
 {
@@ -11,77 +12,104 @@ namespace SecretFiles
 		nfloat SecretViewHeight;
 		nfloat SecretViewWidth;
 		nfloat padding = 20;
+		nfloat x = 0;
+		bool SecretFilesAlreadyRendered;
 
 		public OverviewController (IntPtr handle) : base (handle)
         {
         }
 
-		public override void ViewDidLoad()
-		{
-			base.ViewDidLoad();
-
-
-
-		}
 		public override void ViewWillAppear(bool animated)
 		{
 			base.ViewWillAppear(animated);
 
+			//fetch secret files from server
 			var SecretFilesSource = new List<SecretFileItem>();
-			SecretFilesSource.Add(new SecretFileItem("DLSU Secret Files", "DLSU Secret Files' New Home", ""));
-			SecretFilesSource.Add(new SecretFileItem("ADMU Secret Files", "DLSU Secret Files' New Home", ""));
-			SecretFilesSource.Add(new SecretFileItem("UP Secret Files", "DLSU Secret Files' New Home", ""));
-			SecretFilesSource.Add(new SecretFileItem("Zobel Secret Files", "DLSU Secret Files' New Home", ""));
-			SecretFilesSource.Add(new SecretFileItem("GH Secret Files", "DLSU Secret Files' New Home", ""));
+			var background = "backgrounds/background.png";
+			SecretFilesSource.Add(new SecretFileItem("DLSU Secret Files", "DLSU Secret Files' New Home", background));
+			SecretFilesSource.Add(new SecretFileItem("ADMU Secret Files", "DLSU Secret Files' New Home", background));
+			SecretFilesSource.Add(new SecretFileItem("UP Secret Files", "DLSU Secret Files' New Home", background));
+			SecretFilesSource.Add(new SecretFileItem("Zobel Secret Files", "DLSU Secret Files' New Home", background));
+			SecretFilesSource.Add(new SecretFileItem("GH Secret Files", "DLSU Secret Files' New Home", background));
 
-			SecretViewHeight = CurrentSecretsScrollView.Frame.Height * 0.7f;
-			SecretViewWidth = (CurrentSecretsScrollView.Frame.Width - (padding * 3)) / 2;
+			SetupScrollViewLayout(SecretFilesSource.Count);
 
-			CurrentSecretsScrollView.ContentSize = new CGSize(SecretFilesSource.Count * (padding + SecretViewWidth), CurrentSecretsScrollView.Frame.Height);
-			CurrentSecretsScrollView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
-
-			//add SecretFile templates into scrollvieww
+			//add SecretFile templates into scrollview
 			CreateSecretFileScrollView(SecretFilesSource);
 		}
+
+		void SetupScrollViewLayout(int numberOfSecretFiles) { 
+			CurrentSecretsScrollView.Frame = new CGRect(CurrentSecretsScrollView.Frame.X, CurrentSecretsScrollView.Frame.Y,
+														CurrentSecretsScrollView.Frame.Width,
+														UIScreen.MainScreen.ApplicationFrame.Height - CurrentSecretsScrollView.Frame.Y);
+			
+			SecretViewHeight = ((CurrentSecretsScrollView.Frame.Height) - (padding * 2)) * 0.8f;
+			SecretViewWidth = (UIScreen.MainScreen.ApplicationFrame.Width - (padding * 3)) / 2;
+
+			CurrentSecretsScrollView.ContentSize = new CGSize(numberOfSecretFiles * (padding + SecretViewWidth), 
+			                                                  0//SecretViewHeight + (padding*2)
+			                                                 );
+			CurrentSecretsScrollView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
+		}
+
 		void CreateSecretFileScrollView(List<SecretFileItem> Source) {
 			Console.WriteLine("CreateSecretFileScrollView: {0} secret files", Source.Count);
-			for (int c = 0; c < Source.Count; c++) { 
-				var x = padding + ((padding + SecretViewWidth) * c);
-				var y = padding;
-				Console.WriteLine("SecretViews at y {0}, ScrollView at y {1}", y, CurrentSecretsScrollView.Frame.Y);
-				Console.WriteLine("Secret files {0} positioned at {1}, {2}", c, x, y);;
-				CurrentSecretsScrollView.Add(CreateSecretFileView(Source[c].Title, Source[c].Description, "",
-				                                                  x, y, SecretViewWidth, SecretViewHeight));
+			Console.WriteLine("Screen width is {0}", UIScreen.MainScreen.ApplicationFrame.Width);
+
+			if (!SecretFilesAlreadyRendered) { //don't double render everytime view is shown to avoid duplicates
+				var numberOfFiles = Source.Count;
+				for (int c = 0; c < numberOfFiles; c++)
+				{
+					x += c < 1 ? padding : (padding + SecretViewWidth);
+					var y = padding;
+					var view = CreateSecretFileView(Source[c], x, y, SecretViewWidth, SecretViewHeight);
+					CurrentSecretsScrollView.Add(view);
+					CurrentSecretsScrollView.BringSubviewToFront(view);
+				}
+				SecretFilesAlreadyRendered = true;
 			}
 		}
 
-		UIView CreateSecretFileView(string title, string description, string imageFile, nfloat ViewX, nfloat ViewY, nfloat ViewWidth, nfloat ViewHeight) {
-			var labelSpacing = 2;
+		UIView CreateSecretFileView(SecretFileItem secret, nfloat ViewX, nfloat ViewY, nfloat ViewWidth, nfloat ViewHeight) {
+			var labelSpacing = 10;
 			var ViewFrame = new CGRect(ViewX, ViewY, ViewWidth, ViewHeight);
+			var descY = ViewY + (ViewHeight * 0.6);
+			var labelWidth = ViewWidth * 0.8;
 
-			var titleLabel = new UILabel(new CGRect(ViewX+labelSpacing, ViewY+labelSpacing, ViewWidth * 0.8, ViewHeight * 0.1));
-			titleLabel.Lines = 3;
+			var titleLabel = new UILabel(new CGRect((ViewWidth * 0.5) - (labelWidth * 0.5), 
+			                                        labelSpacing, labelWidth, ViewHeight * 0.1));//doesnt seem consistent for iPhone SE and 5s screen spacing 
+			titleLabel.Lines = 2;
+			titleLabel.TextAlignment = UITextAlignment.Center;
 			titleLabel.LineBreakMode = UILineBreakMode.WordWrap;
 			titleLabel.Font = UIFont.BoldSystemFontOfSize(15);
 			titleLabel.TextColor = UIColor.White;
-			titleLabel.Text = title;
+			titleLabel.Text = secret.Title;
 			titleLabel.TextAlignment = UITextAlignment.Left;
 
-			var descriptionLabel = new UILabel(new CGRect(ViewX + 5, ViewY + (ViewHeight * 0.6), ViewWidth * 0.8, ViewHeight * 0.4));
+			var descriptionLabel = new UILabel(new CGRect((ViewWidth * 0.5) - (labelWidth * 0.5), descY, labelWidth, ViewHeight * 0.4));
 			descriptionLabel.Lines = 4;
+			descriptionLabel.TextAlignment = UITextAlignment.Center;
 			descriptionLabel.LineBreakMode = UILineBreakMode.WordWrap;
 			descriptionLabel.Font = UIFont.SystemFontOfSize(15);
 			descriptionLabel.TextColor = UIColor.White;
-			descriptionLabel.Text = description;
+			descriptionLabel.Text = secret.Description;
+			descriptionLabel.TextAlignment = UITextAlignment.Left;
 
-			var imageView = new UIImageView(ViewFrame);
-			imageView.Image = UIImage.FromFile("background.jpg");
+			var imageView = new UIImageView(new CGRect(0, 0, ViewWidth, ViewHeight));
+			imageView.ContentMode = UIViewContentMode.ScaleAspectFill;
+			imageView.Image = UIImage.FromFile(secret.ImageFile);
 
 			var secretFileView = new UIView(ViewFrame);
 			secretFileView.Add(imageView);
 			secretFileView.Add(titleLabel);
 			secretFileView.Add(descriptionLabel);
-			secretFileView.BackgroundColor = UIColor.Black;
+
+			var tapRecognizer = new UITapGestureRecognizer(() => {
+				var ChatController = Storyboard.InstantiateViewController("SecretFileChatController") as SecretFileChatController;
+				ChatController.SetSecretFileContent(secret);
+				PresentViewController(ChatController, GlobalVars.CanAnimate, () => { });
+			});
+			secretFileView.AddGestureRecognizer(tapRecognizer);
 
 			return secretFileView;
 		}

@@ -20,13 +20,30 @@ namespace SecretFiles
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel DoneLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton ShareButton { get; set; }
+
+        [Action ("CopyButton_TouchUpInside:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void CopyButton_TouchUpInside (UIKit.UIButton sender);
+
+        [Action ("ShareButton_TouchUpInside:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void ShareButton_TouchUpInside (UIKit.UIButton sender);
 
         void ReleaseDesignerOutlets ()
         {
             if (CopyButton != null) {
                 CopyButton.Dispose ();
                 CopyButton = null;
+            }
+
+            if (DoneLabel != null) {
+                DoneLabel.Dispose ();
+                DoneLabel = null;
             }
 
             if (ShareButton != null) {

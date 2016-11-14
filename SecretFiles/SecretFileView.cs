@@ -16,9 +16,6 @@ namespace SecretFiles
 		public void SetSecretFileInfo(SecretFileItem secretFile)
 		{
 			SecretFile = secretFile;
-			//TitleLabel.Text = secretFile.Title;
-			//DescriptionLabel.Text = secretFile.Description;
-			//BackgroundImageView.Image = UIImage.FromFile(secretFile.ImageFile)
 			BackgroundImageView.BackgroundColor = UIColor.Clear;
 			this.BackgroundColor = UIColor.Green;
 		}

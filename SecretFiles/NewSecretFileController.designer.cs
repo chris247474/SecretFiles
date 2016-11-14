@@ -16,7 +16,7 @@ namespace SecretFiles
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UIKit.UILabel DescriptionLabel { get; set; }
+        UIKit.UIButton CloseButton { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -24,18 +24,31 @@ namespace SecretFiles
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel NextLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UITextField SecretFileNameLabel { get; set; }
+
+        [Action ("CloseButton_TouchUpInside:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void CloseButton_TouchUpInside (UIKit.UIButton sender);
 
         void ReleaseDesignerOutlets ()
         {
-            if (DescriptionLabel != null) {
-                DescriptionLabel.Dispose ();
-                DescriptionLabel = null;
+            if (CloseButton != null) {
+                CloseButton.Dispose ();
+                CloseButton = null;
             }
 
             if (DescriptionTextView != null) {
                 DescriptionTextView.Dispose ();
                 DescriptionTextView = null;
+            }
+
+            if (NextLabel != null) {
+                NextLabel.Dispose ();
+                NextLabel = null;
             }
 
             if (SecretFileNameLabel != null) {

@@ -42,6 +42,10 @@ namespace SecretFiles
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void FlashButton_TouchUpInside (UIKit.UIButton sender);
 
+        [Action ("GalleryButton_TouchUpInside:")]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        partial void GalleryButton_TouchUpInside (UIKit.UIButton sender);
+
         [Action ("SwitchCameraButton_TouchUpInside:")]
         [GeneratedCode ("iOS Designer", "1.0")]
         partial void SwitchCameraButton_TouchUpInside (UIKit.UIButton sender);

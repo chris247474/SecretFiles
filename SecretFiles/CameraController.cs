@@ -36,7 +36,7 @@ namespace SecretFiles
 				var topVC = iOSNavigationHelper.GetTopUIViewController();
 			    var OverviewController = topVC.Storyboard.InstantiateViewController("OverviewController") as OverviewController;
 			   //OverviewController.View.BackgroundColor = UIColor.Clear;
-				//this.PresentViewController(OverviewController, true, () => { });
+				this.PresentViewController(OverviewController, true, () => { });
 			});
 			SwipeToOverviewGesture.Direction = UISwipeGestureRecognizerDirection.Left;
 			View.AddGestureRecognizer(SwipeToOverviewGesture);
@@ -45,6 +45,11 @@ namespace SecretFiles
 		public override void DidReceiveMemoryWarning()
 		{
 			base.DidReceiveMemoryWarning();
+		}
+
+		partial void GalleryButton_TouchUpInside(UIButton sender)
+		{
+			PhotoPickerService.ChoosePicture();
 		}
 
 		async partial void TakePhotoButton_TouchUpInside(UIButton sender)
