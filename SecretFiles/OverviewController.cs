@@ -7,7 +7,7 @@ using Acr.UserDialogs;
 
 namespace SecretFiles
 {
-    public partial class OverviewController : UIViewController
+	public partial class OverviewController : PageForPageController
     {
 		nfloat SecretViewHeight;
 		nfloat SecretViewWidth;
@@ -22,20 +22,68 @@ namespace SecretFiles
 		public override void ViewWillAppear(bool animated)
 		{
 			base.ViewWillAppear(animated);
+			PopulateSecretFilesList();
+		}
+		public override void ViewDidAppear(bool animated)
+		{
+			base.ViewDidAppear(animated);
+			if (!Reachability.HasInternetConnection()) {
+				UserDialogs.Instance.Alert("Please connect to the internet");
+			}
+		}
+		void PopulateListIfConnected() {
+			if (Reachability.HasInternetConnection())
+			{
+				PopulateSecretFilesList();
+			}
+		}
+		async void PopulateSecretFilesList()
+		{
+			LoadingIndicatorView.StartAnimating();
 
 			//fetch secret files from server
-			var SecretFilesSource = new List<SecretFileItem>();
-			var background = "backgrounds/background.png";
-			SecretFilesSource.Add(new SecretFileItem("DLSU Secret Files", "DLSU Secret Files' New Home", background));
-			SecretFilesSource.Add(new SecretFileItem("ADMU Secret Files", "DLSU Secret Files' New Home", background));
-			SecretFilesSource.Add(new SecretFileItem("UP Secret Files", "DLSU Secret Files' New Home", background));
-			SecretFilesSource.Add(new SecretFileItem("Zobel Secret Files", "DLSU Secret Files' New Home", background));
-			SecretFilesSource.Add(new SecretFileItem("GH Secret Files", "DLSU Secret Files' New Home", background));
+			var SecretFilesSource =
+				await GlobalVars.CloudDB.GetGroupItemsAsync();
+				//GenerateTestData();
 
-			SetupScrollViewLayout(SecretFilesSource.Count);
+			var background = "backgrounds/background.png";//for testing
+			foreach (var secret in SecretFilesSource)
+			{
+				secret.groupImage = background;
+			}
 
-			//add SecretFile templates into scrollview
-			CreateSecretFileScrollView(SecretFilesSource);
+			LoadingIndicatorView.StopAnimating();
+
+			//add SecretFile views into scrollview
+			if (SecretFilesSource != null && SecretFilesSource.Count > 0)
+			{
+				SetupScrollViewLayout(SecretFilesSource.Count);
+				CreateSecretFileScrollView(SecretFilesSource);
+			}
+		}
+
+		List<GroupItem> GenerateTestData() { 
+			var SecretFilesSource = new List<GroupItem>();
+			SecretFilesSource.Add(new GroupItem { 
+				groupName = "DLSU Secret Files", 
+				groupDesc = "DLSU Secret Files' New Home", 
+			});
+			SecretFilesSource.Add(new GroupItem
+			{
+				groupName = "DLSU Secret Files",
+				groupDesc = "DLSU Secret Files' New Home",
+			});
+			SecretFilesSource.Add(new GroupItem
+			{
+				groupName = "DLSU Secret Files",
+				groupDesc = "DLSU Secret Files' New Home",
+			});
+			SecretFilesSource.Add(new GroupItem
+			{
+				groupName = "DLSU Secret Files",
+				groupDesc = "DLSU Secret Files' New Home",
+			});
+			return SecretFilesSource;
 		}
 
 		void SetupScrollViewLayout(int numberOfSecretFiles) { 
@@ -52,9 +100,9 @@ namespace SecretFiles
 			CurrentSecretsScrollView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth;
 		}
 
-		void CreateSecretFileScrollView(List<SecretFileItem> Source) {
+		void CreateSecretFileScrollView(List<GroupItem> Source) {
 			Console.WriteLine("CreateSecretFileScrollView: {0} secret files", Source.Count);
-			Console.WriteLine("Screen width is {0}", UIScreen.MainScreen.ApplicationFrame.Width);
+			Console.WriteLine("Screen width is {0}", View.Frame.Width);//UIScreen.MainScreen.ApplicationFrame.Width);
 
 			if (!SecretFilesAlreadyRendered) { //don't double render everytime view is shown to avoid duplicates
 				var numberOfFiles = Source.Count;
@@ -70,7 +118,7 @@ namespace SecretFiles
 			}
 		}
 
-		UIView CreateSecretFileView(SecretFileItem secret, nfloat ViewX, nfloat ViewY, nfloat ViewWidth, nfloat ViewHeight) {
+		UIView CreateSecretFileView(GroupItem secret, nfloat ViewX, nfloat ViewY, nfloat ViewWidth, nfloat ViewHeight) {
 			var labelSpacing = 10;
 			var ViewFrame = new CGRect(ViewX, ViewY, ViewWidth, ViewHeight);
 			var descY = ViewY + (ViewHeight * 0.6);
@@ -83,7 +131,7 @@ namespace SecretFiles
 			titleLabel.LineBreakMode = UILineBreakMode.WordWrap;
 			titleLabel.Font = UIFont.BoldSystemFontOfSize(15);
 			titleLabel.TextColor = UIColor.White;
-			titleLabel.Text = secret.Title;
+			titleLabel.Text = secret.groupName;
 			titleLabel.TextAlignment = UITextAlignment.Left;
 
 			var descriptionLabel = new UILabel(new CGRect((ViewWidth * 0.5) - (labelWidth * 0.5), descY, labelWidth, ViewHeight * 0.4));
@@ -92,12 +140,12 @@ namespace SecretFiles
 			descriptionLabel.LineBreakMode = UILineBreakMode.WordWrap;
 			descriptionLabel.Font = UIFont.SystemFontOfSize(15);
 			descriptionLabel.TextColor = UIColor.White;
-			descriptionLabel.Text = secret.Description;
+			descriptionLabel.Text = secret.groupDesc;
 			descriptionLabel.TextAlignment = UITextAlignment.Left;
 
 			var imageView = new UIImageView(new CGRect(0, 0, ViewWidth, ViewHeight));
 			imageView.ContentMode = UIViewContentMode.ScaleAspectFill;
-			imageView.Image = UIImage.FromFile(secret.ImageFile);
+			imageView.Image = UIImage.FromFile(secret.groupImage);
 
 			var secretFileView = new UIView(ViewFrame);
 			secretFileView.Add(imageView);

@@ -1,4 +1,7 @@
-﻿using Foundation;
+﻿using System;
+using System.Threading.Tasks;
+using Acr.UserDialogs;
+using Foundation;
 using UIKit;
 
 namespace SecretFiles
@@ -26,9 +29,21 @@ namespace SecretFiles
 			Xamarin.Calabash.Start();
 #endif
 
+			ConnectToServer();
+
 			return true;
 		}
-
+		void ConnectToServer() {
+			if (Reachability.HasInternetConnection()) { 
+				ConnectToAzureDB();
+				ChatMessageService.ConnectChatClientToServer();
+			}
+		}
+		void ConnectToAzureDB() { 
+			Microsoft.WindowsAzure.MobileServices.CurrentPlatform.Init();
+			GlobalVars.CloudDB.Initialize();
+			AccountHelper.LogInIfCloudDBInitialized();
+		}
 		public override void OnResignActivation(UIApplication application)
 		{
 			// Invoked when the application is about to move from active to inactive state.

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="61">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3909">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
     </dependencies>
@@ -59,9 +59,19 @@
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <constraints>
-                                    <constraint id="29" firstItem="7" firstAttribute="height" constant="40"/>
-                                    <constraint id="30" firstItem="7" firstAttribute="width" constant="40"/>
+                                    <constraint id="29" firstItem="7" firstAttribute="height" constant="40">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="35"/>
+                                    </constraint>
+                                    <constraint id="30" firstItem="7" firstAttribute="width" constant="40">
+                                        <variation key="heightClass=regular-widthClass=compact" constant="35"/>
+                                    </constraint>
                                 </constraints>
+                                <connections>
+                                    <action selector="GalleryButton_TouchUpInside:" destination="BYZ-38-t0r" id="2224" eventType="touchUpInside"/>
+                                </connections>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <rect key="frame" x="40" y="30" width="35" height="35"/>
+                                </variation>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="8" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="187" y="28" width="40" height="40"/>
@@ -112,14 +122,17 @@
                         <outlet property="SwitchCameraButton" destination="8" id="name-outlet-8"/>
                         <outlet property="AudioButton" destination="4" id="name-outlet-4"/>
                     </connections>
+                    <navigationItem title="Title" id="2614" key="navigationItem"/>
+                    <nil key="simulatedTopBarMetrics"/>
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="987" y="718"/>
+            <point key="canvasLocation" x="995" y="900"/>
         </scene>
         <scene sceneID="60">
             <objects>
-                <viewController id="61" sceneMemberID="viewController" customClass="OverviewController" storyboardIdentifier="OverviewController">
+                <viewController id="61" sceneMemberID="viewController" customClass="OverviewController" storyboardIdentifier="OverviewController" title="Secret FIles">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="58"/>
                         <viewControllerLayoutGuide type="bottom" id="59"/>
@@ -142,8 +155,50 @@
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="72" translatesAutoresizingMaskIntoConstraints="NO" key="tableFooterView" pagingEnabled="YES" misplaced="YES" showsVerticalScrollIndicator="NO" alwaysBounceHorizontal="YES">
                                 <rect key="frame" x="0.0" y="257.5" width="414" height="475.5"/>
                                 <variation key="heightClass=regular-widthClass=compact">
-                                    <rect key="frame" x="0.0" y="366.5" width="414" height="369.5"/>
+                                    <rect key="frame" x="0.0" y="365.5" width="414" height="370.5"/>
+                                    <mask key="subviews">
+                                        <include reference="3937"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <include reference="3938"/>
+                                        <include reference="3942"/>
+                                    </mask>
                                 </variation>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="3937" hidesWhenStopped="YES" hidden="YES">
+                                        <rect key="frame" x="197" y="124" width="20" height="20"/>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <rect key="frame" x="197" y="52" width="20" height="20"/>
+                                            <mask key="constraints">
+                                                <include reference="3939"/>
+                                                <include reference="3940"/>
+                                            </mask>
+                                        </variation>
+                                        <constraints>
+                                            <constraint id="3939" firstItem="3937" firstAttribute="height" constant="20"/>
+                                            <constraint id="3940" firstItem="3937" firstAttribute="width" constant="20"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="3939"/>
+                                                <exclude reference="3940"/>
+                                            </mask>
+                                        </variation>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="3937"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <exclude reference="3938"/>
+                                        <exclude reference="3942"/>
+                                    </mask>
+                                </variation>
+                                <constraints>
+                                    <constraint id="3938" firstItem="3937" firstAttribute="centerX" secondItem="72" secondAttribute="centerX"/>
+                                    <constraint id="3942" firstItem="3937" firstAttribute="top" secondItem="72" secondAttribute="top" constant="52"/>
+                                </constraints>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="123" translatesAutoresizingMaskIntoConstraints="NO" misplaced="YES">
                                 <rect key="frame" x="173" y="127.5" width="70" height="70"/>
@@ -158,8 +213,9 @@
                                     <action selector="NewSecretButton_TouchUpInside:" destination="61" id="153" eventType="touchUpInside"/>
                                 </connections>
                                 <variation key="heightClass=regular-widthClass=compact">
-                                    <rect key="frame" x="173" y="148" width="70" height="70"/>
+                                    <rect key="frame" x="173" y="147.5" width="70" height="70"/>
                                 </variation>
+                                <accessibility key="accessibilityConfiguration" identifier="NewSecretFileButton"/>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="124" translatesAutoresizingMaskIntoConstraints="NO" text="Start your own Secret File" misplaced="YES">
                                 <rect key="frame" x="105" y="83" width="206" height="20.5"/>
@@ -201,7 +257,7 @@
                                 <rect key="frame" x="3" y="206" width="240" height="128"/>
                                 <color key="backgroundColor" colorSpace="calibratedRGB" red="0.89411764705882357" green="0.89803921568627454" blue="0.90980392156862744" alpha="1"/>
                                 <variation key="heightClass=regular-widthClass=compact">
-                                    <rect key="frame" x="346" y="357" width="68" height="1"/>
+                                    <rect key="frame" x="345.5" y="356.5" width="68.5" height="1"/>
                                     <mask key="constraints">
                                         <include reference="2186"/>
                                     </mask>
@@ -293,6 +349,9 @@
                                 <include reference="2185"/>
                             </mask>
                         </variation>
+                        <accessibility key="accessibilityConfiguration" identifier="Overview" label="Overview">
+                            <bool key="isElement" value="YES"/>
+                        </accessibility>
                     </view>
                     <connections>
                         <outlet property="searchDisplayController" destination="77" id="76"/>
@@ -300,6 +359,8 @@
                         <outlet property="NewSecretButton" destination="123" id="name-outlet-123"/>
                         <outlet property="CurrentSecretsScrollView" destination="72" id="name-outlet-72"/>
                         <outlet property="InvitedLabel" destination="1718" id="name-outlet-1718"/>
+                        <outlet property="Overview" destination="62" id="name-outlet-62"/>
+                        <outlet property="LoadingIndicatorView" destination="3937" id="name-outlet-3937"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="63" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -322,7 +383,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="1527" y="901"/>
+            <point key="canvasLocation" x="1537" y="901"/>
         </scene>
         <scene sceneID="67">
             <objects>
@@ -375,6 +436,7 @@
                                         <exclude reference="1721"/>
                                     </mask>
                                 </variation>
+                                <accessibility key="accessibilityConfiguration" label="SecretFileNameTextField" hint="Enter a name for the new secret file" identifier="SecretFileNameTextField"/>
                             </textField>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" id="1681" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="67" y="201" width="240" height="128"/>
@@ -417,6 +479,7 @@
                                         <exclude reference="1692"/>
                                     </mask>
                                 </variation>
+                                <accessibility key="accessibilityConfiguration" label="NextPageLabel" hint="Go to next page" identifier="NextLabel"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="2133" translatesAutoresizingMaskIntoConstraints="NO" buttonType="roundedRect">
                                 <rect key="frame" x="20" y="41" width="46" height="30"/>
@@ -520,20 +583,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="70" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2015" y="533"/>
-        </scene>
-        <scene sceneID="189">
-            <objects>
-                <navigationController id="190" sceneMemberID="viewController" navigationBarHidden="YES">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="192">
-                        <rect key="frame" x="0.0" y="20" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections/>
-                    <nil key="simulatedTopBarMetrics"/>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="193" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="375" y="712"/>
         </scene>
         <scene sceneID="1695">
             <objects>
@@ -786,13 +835,54 @@
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="670"/>
                                 </variation>
                             </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="1939" translatesAutoresizingMaskIntoConstraints="NO">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="1939" translatesAutoresizingMaskIntoConstraints="NO" showsHorizontalScrollIndicator="NO" alwaysBounceVertical="YES" keyboardDismissMode="onDrag">
                                 <rect key="frame" x="0.0" y="0.0" width="240" height="128"/>
                                 <variation key="heightClass=regular-widthClass=compact">
                                     <rect key="frame" x="0.0" y="0.0" width="414" height="671"/>
+                                    <mask key="subviews">
+                                        <include reference="3986"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <include reference="3988"/>
+                                        <include reference="3991"/>
+                                    </mask>
                                 </variation>
                                 <color key="backgroundColor" colorSpace="calibratedWhite" white="0" alpha="0"/>
-                                <subviews/>
+                                <subviews>
+                                    <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="3986" hidesWhenStopped="YES" hidden="YES">
+                                        <rect key="frame" x="166" y="42" width="20" height="20"/>
+                                        <variation key="heightClass=regular-widthClass=compact">
+                                            <rect key="frame" x="197" y="22" width="20" height="20"/>
+                                            <mask key="constraints">
+                                                <include reference="3989"/>
+                                                <include reference="3990"/>
+                                            </mask>
+                                        </variation>
+                                        <constraints>
+                                            <constraint id="3989" firstItem="3986" firstAttribute="height" constant="20"/>
+                                            <constraint id="3990" firstItem="3986" firstAttribute="width" constant="20"/>
+                                        </constraints>
+                                        <variation key="default">
+                                            <mask key="constraints">
+                                                <exclude reference="3989"/>
+                                                <exclude reference="3990"/>
+                                            </mask>
+                                        </variation>
+                                    </activityIndicatorView>
+                                </subviews>
+                                <variation key="default">
+                                    <mask key="subviews">
+                                        <exclude reference="3986"/>
+                                    </mask>
+                                    <mask key="constraints">
+                                        <exclude reference="3988"/>
+                                        <exclude reference="3991"/>
+                                    </mask>
+                                </variation>
+                                <constraints>
+                                    <constraint id="3988" firstItem="3986" firstAttribute="top" secondItem="1768" secondAttribute="bottom" constant="2"/>
+                                    <constraint id="3991" firstItem="3986" firstAttribute="centerX" secondItem="1939" secondAttribute="centerX"/>
+                                </constraints>
                             </scrollView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="1792" translatesAutoresizingMaskIntoConstraints="NO">
                                 <rect key="frame" x="20" y="41" width="46" height="30"/>
@@ -898,9 +988,27 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences" enablesReturnKeyAutomatically="YES"/>
                                 <variation key="heightClass=regular-widthClass=compact">
-                                    <rect key="frame" x="0.0" y="669" width="414" height="32"/>
+                                    <rect key="frame" x="0.0" y="654" width="414" height="47"/>
                                 </variation>
                             </textView>
+                            <view contentMode="scaleToFill" id="3921" translatesAutoresizingMaskIntoConstraints="NO">
+                                <rect key="frame" x="73" y="614" width="240" height="128"/>
+                                <color key="backgroundColor" colorSpace="calibratedWhite" white="1" alpha="1"/>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <rect key="frame" x="-1" y="700" width="415" height="1"/>
+                                    <mask key="constraints">
+                                        <include reference="3924"/>
+                                    </mask>
+                                </variation>
+                                <constraints>
+                                    <constraint id="3924" firstItem="3921" firstAttribute="height" constant="1"/>
+                                </constraints>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="3924"/>
+                                    </mask>
+                                </variation>
+                            </view>
                         </subviews>
                         <variation key="default">
                             <mask key="subviews">
@@ -911,6 +1019,7 @@
                                 <exclude reference="1796"/>
                                 <exclude reference="1894"/>
                                 <exclude reference="1984"/>
+                                <exclude reference="3921"/>
                             </mask>
                             <mask key="constraints">
                                 <exclude reference="1935"/>
@@ -924,7 +1033,6 @@
                                 <exclude reference="1971"/>
                                 <exclude reference="1985"/>
                                 <exclude reference="1986"/>
-                                <exclude reference="1987"/>
                                 <exclude reference="1988"/>
                                 <exclude reference="1989"/>
                                 <exclude reference="1990"/>
@@ -933,6 +1041,11 @@
                                 <exclude reference="2116"/>
                                 <exclude reference="2117"/>
                                 <exclude reference="2118"/>
+                                <exclude reference="2497"/>
+                                <exclude reference="3922"/>
+                                <exclude reference="3923"/>
+                                <exclude reference="3925"/>
+                                <exclude reference="3926"/>
                             </mask>
                         </variation>
                         <variation key="heightClass=regular-widthClass=compact">
@@ -944,6 +1057,7 @@
                                 <include reference="1796"/>
                                 <include reference="1894"/>
                                 <include reference="1984"/>
+                                <include reference="3921"/>
                             </mask>
                             <mask key="constraints">
                                 <include reference="1935"/>
@@ -957,7 +1071,6 @@
                                 <include reference="1971"/>
                                 <include reference="1985"/>
                                 <include reference="1986"/>
-                                <include reference="1987"/>
                                 <include reference="1988"/>
                                 <include reference="1989"/>
                                 <include reference="1990"/>
@@ -966,6 +1079,11 @@
                                 <include reference="2116"/>
                                 <include reference="2117"/>
                                 <include reference="2118"/>
+                                <include reference="2497"/>
+                                <include reference="3922"/>
+                                <include reference="3923"/>
+                                <include reference="3925"/>
+                                <include reference="3926"/>
                             </mask>
                         </variation>
                         <constraints>
@@ -984,7 +1102,6 @@
                             </constraint>
                             <constraint id="1985" firstItem="1984" firstAttribute="leading" secondItem="1772" secondAttribute="leading"/>
                             <constraint id="1986" firstItem="1984" firstAttribute="trailing" secondItem="1772" secondAttribute="trailing"/>
-                            <constraint id="1987" firstItem="1939" firstAttribute="bottom" secondItem="1984" secondAttribute="top" constant="2"/>
                             <constraint id="1988" firstItem="1769" firstAttribute="top" secondItem="1984" secondAttribute="bottom" constant="35"/>
                             <constraint id="1989" firstItem="1894" firstAttribute="top" secondItem="1984" secondAttribute="bottom" constant="2"/>
                             <constraint id="1990" firstItem="1796" firstAttribute="top" secondItem="1984" secondAttribute="bottom" constant="2"/>
@@ -995,6 +1112,11 @@
                             <constraint id="2116" firstItem="1792" firstAttribute="leading" secondItem="1772" secondAttribute="leading" constant="22"/>
                             <constraint id="2117" firstItem="1894" firstAttribute="leading" secondItem="1796" secondAttribute="trailing" constant="30"/>
                             <constraint id="2118" firstItem="1795" firstAttribute="leading" secondItem="1792" secondAttribute="trailing" constant="44"/>
+                            <constraint id="2497" firstItem="1934" firstAttribute="bottom" secondItem="1984" secondAttribute="top" constant="16"/>
+                            <constraint id="3922" firstItem="1984" firstAttribute="leading" secondItem="3921" secondAttribute="leading" constant="1"/>
+                            <constraint id="3923" firstItem="3921" firstAttribute="trailing" secondItem="1984" secondAttribute="trailing"/>
+                            <constraint id="3925" firstItem="3921" firstAttribute="top" secondItem="1984" secondAttribute="top" constant="46"/>
+                            <constraint id="3926" firstItem="3921" firstAttribute="bottom" secondItem="1984" secondAttribute="bottom"/>
                         </constraints>
                     </view>
                     <connections>
@@ -1005,11 +1127,76 @@
                         <outlet property="GalleryButton" destination="1796" id="name-outlet-1796"/>
                         <outlet property="SendButton" destination="1894" id="name-outlet-1894"/>
                         <outlet property="TextField" destination="1984" id="name-outlet-1984"/>
+                        <outlet property="LoadingIndicatorView" destination="3986" id="name-outlet-3986"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1773" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2014" y="1370"/>
+        </scene>
+        <scene sceneID="3870">
+            <objects>
+                <viewController id="3871" sceneMemberID="viewController" customClass="MainController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3868"/>
+                        <viewControllerLayoutGuide type="bottom" id="3869"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="3872">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="3875" translatesAutoresizingMaskIntoConstraints="NO" showsVerticalScrollIndicator="NO" showsHorizontalScrollIndicator="NO" pagingEnabled="YES" bounces="NO">
+                                <rect key="frame" x="4" y="0.0" width="240" height="128"/>
+                                <variation key="heightClass=regular-widthClass=compact">
+                                    <rect key="frame" x="0.0" y="0.0" width="414" height="736"/>
+                                </variation>
+                                <color key="backgroundColor" colorSpace="calibratedWhite" white="0" alpha="0"/>
+                            </scrollView>
+                        </subviews>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="3875"/>
+                            </mask>
+                            <mask key="constraints">
+                                <exclude reference="3876"/>
+                                <exclude reference="3878"/>
+                                <exclude reference="3879"/>
+                                <exclude reference="3897"/>
+                            </mask>
+                        </variation>
+                        <variation key="heightClass=regular-widthClass=compact">
+                            <mask key="subviews">
+                                <include reference="3875"/>
+                            </mask>
+                            <mask key="constraints">
+                                <include reference="3876"/>
+                                <include reference="3878"/>
+                                <include reference="3879"/>
+                                <include reference="3897"/>
+                            </mask>
+                        </variation>
+                        <constraints>
+                            <constraint id="3876" firstItem="3875" firstAttribute="top" secondItem="3872" secondAttribute="top"/>
+                            <constraint id="3878" firstItem="3875" firstAttribute="trailing" secondItem="3872" secondAttribute="trailing"/>
+                            <constraint id="3879" firstItem="3875" firstAttribute="bottom" secondItem="3872" secondAttribute="bottom"/>
+                            <constraint id="3897" firstItem="3875" firstAttribute="leading" secondItem="3872" secondAttribute="leading"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="MainScrollView" destination="3875" id="name-outlet-3875"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3873" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="166" y="1816"/>
+        </scene>
+        <scene sceneID="3908">
+            <objects>
+                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="min" id="3909" sceneMemberID="viewController" customClass="MainPageController"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3910" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="442" y="905"/>
         </scene>
     </scenes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
@@ -1027,5 +1214,6 @@
         <image name="Icons/CameraFigure.png" width="100" height="100"/>
         <image name="Icons/Smiley.png" width="100" height="100"/>
         <image name="Icons/Close-Thin.png" width="44" height="44"/>
+        <image name="profilepics/people.png" width="22" height="22"/>
     </resources>
 </document>

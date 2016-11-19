@@ -42,6 +42,6 @@
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app needs to access your photo library to save pictures you have taken</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.secret.SecretFiles</string>
+	<string>com.secretfiles.SecretFiles</string>
 </dict>
 </plist>

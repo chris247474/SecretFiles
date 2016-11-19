@@ -20,7 +20,6 @@ namespace SecretFiles
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
-			AddDismissGesture();
 			AddTapGestureToNextLabel();
 			AddDismissKeyboardGesture();
 			RegisterKeyboardEvents();
@@ -70,8 +69,8 @@ namespace SecretFiles
 
 		void AddDismissKeyboardGesture() {
 			this.View.AddGestureRecognizer(new UITapGestureRecognizer(() => {
-				DescriptionTextView.ResignFirstResponder();
-				SecretFileNameLabel.ResignFirstResponder();
+				if(DescriptionTextView.IsFirstResponder) DescriptionTextView.ResignFirstResponder();
+				if(SecretFileNameLabel.IsFirstResponder) SecretFileNameLabel.ResignFirstResponder();
 			}));
 			//when user presses "next" on lower right of keyboard
 			SecretFileNameLabel.ShouldReturn += (textField) =>
@@ -83,7 +82,7 @@ namespace SecretFiles
 		void AddTapGestureToNextLabel()
 		{
 			NextLabel.UserInteractionEnabled = true;
-			NextLabel.AddGestureRecognizer(new UITapGestureRecognizer(() =>
+			NextLabel.AddGestureRecognizer(new UITapGestureRecognizer(async () =>
 			{
 				Console.WriteLine("NextLabel tapped");
 
@@ -93,25 +92,29 @@ namespace SecretFiles
 				{
 					UserDialogs.Instance.Alert("Please fill in all fields");
 				}
-				else { 
+				else {
 					//create new secret file in DB
+					var saved = await GlobalVars.CloudDB.SaveGroupsItemsTaskAsync(new GroupItem
+					{
+						groupName = SecretFileNameLabel.Text,
+						groupDesc = DescriptionTextView.Text,
+						groupImage = ""
+					});
 
-					var DoneController = Storyboard.InstantiateViewController("DoneCreatingController") as DoneCreatingController;
-						DismissViewController(GlobalVars.CanAnimate, () =>
-						{
-							var nav = iOSNavigationHelper.GetTopUIViewController();
-							nav.PresentViewController(DoneController, GlobalVars.CanAnimate, () => { });
-						});
-					}
+					//go to next page if saved
+					if (saved) GoToNextPage();
+					else UserDialogs.Instance.Alert("Couldn't save the Secret File. Please check your internet connection");
+				}
 			}));
 		}
 
-		void AddDismissGesture() { 
-			var dismissGesture = new UISwipeGestureRecognizer(() => { 
-				//swipe to change background
+		void GoToNextPage() { 
+			var DoneController = Storyboard.InstantiateViewController("DoneCreatingController") as DoneCreatingController;
+			DismissViewController(GlobalVars.CanAnimate, () =>
+			{
+				var nav = iOSNavigationHelper.GetTopUIViewController();
+				nav.PresentViewController(DoneController, GlobalVars.CanAnimate, () => { });
 			});
-			dismissGesture.Direction = UISwipeGestureRecognizerDirection.Down;
-			View.AddGestureRecognizer(dismissGesture);
 		}
 
 		void RegisterKeyboardEvents()

@@ -24,7 +24,15 @@ namespace SecretFiles
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIActivityIndicatorView LoadingIndicatorView { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton NewSecretButton { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView Overview { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
@@ -46,9 +54,19 @@ namespace SecretFiles
                 InvitedLabel = null;
             }
 
+            if (LoadingIndicatorView != null) {
+                LoadingIndicatorView.Dispose ();
+                LoadingIndicatorView = null;
+            }
+
             if (NewSecretButton != null) {
                 NewSecretButton.Dispose ();
                 NewSecretButton = null;
+            }
+
+            if (Overview != null) {
+                Overview.Dispose ();
+                Overview = null;
             }
 
             if (searchDisplayController != null) {

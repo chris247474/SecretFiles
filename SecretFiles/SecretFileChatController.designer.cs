@@ -32,6 +32,10 @@ namespace SecretFiles
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIActivityIndicatorView LoadingIndicatorView { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
         UIKit.UIButton SendButton { get; set; }
 
         [Outlet]
@@ -70,6 +74,11 @@ namespace SecretFiles
             if (GalleryButton != null) {
                 GalleryButton.Dispose ();
                 GalleryButton = null;
+            }
+
+            if (LoadingIndicatorView != null) {
+                LoadingIndicatorView.Dispose ();
+                LoadingIndicatorView = null;
             }
 
             if (SendButton != null) {

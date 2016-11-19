@@ -6,7 +6,7 @@ using UIKit;
 
 namespace SecretFiles
 {
-	public partial class CameraController : UIViewController
+	public partial class CameraController : PageForPageController
 	{
 		bool flashOn = false;
 
@@ -19,27 +19,12 @@ namespace SecretFiles
 		{
 		}
 
-		public override async void ViewDidLoad()
+
+		public async override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
-
-			await AuthorizeCameraUse();
-			SetupLiveCameraStream();
-
-			AddSwipeNavigationGestures();
-		}
-
-		void AddSwipeNavigationGestures() { 
-			var SwipeToOverviewGesture = new UISwipeGestureRecognizer(() =>
-		   {
-				//slide overview screen from right side
-				var topVC = iOSNavigationHelper.GetTopUIViewController();
-			    var OverviewController = topVC.Storyboard.InstantiateViewController("OverviewController") as OverviewController;
-			   //OverviewController.View.BackgroundColor = UIColor.Clear;
-				this.PresentViewController(OverviewController, true, () => { });
-			});
-			SwipeToOverviewGesture.Direction = UISwipeGestureRecognizerDirection.Left;
-			View.AddGestureRecognizer(SwipeToOverviewGesture);
+			//await AuthorizeCameraUse();
+			//SetupLiveCameraStream();
 		}
 
 		public override void DidReceiveMemoryWarning()
